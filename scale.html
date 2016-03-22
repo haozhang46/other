@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	*{
+		padding:0;
+		margin:0;
+	}
+       #min_box{
+            position: relative;
+			border:1px solid #d9d9d9;
+			width: 350px;
+			height: 350px;
+			margin-left: 30px;
+			margin-top: 10px;
+
+       }
+       #min_box img{
+       	-webkit-user-select: none;
+       }
+       #max_box img{
+         
+         position: absolute;
+         display: block;
+       }
+        #max_box{
+        position: absolute;
+			overflow: hidden;
+			left:400px;
+			top:0;
+			width:500px;
+			height: 500px;
+			border:1px solid #d9d9d9;
+			display: none;
+
+        }
+        #slider{
+        	width: 100px;
+        	height: 100px;
+        	position: absolute;
+        	background-color: black;
+        	opacity: 0.5;
+        	left:0;
+        	top:0;
+        	display: none;
+        }
+	</style>
+</head>
+<body>
+	<div id="min_box">
+		<img src="img/min.jpg">
+		<div id="slider"></div>
+	</div>
+	<div id="max_box">
+		<img src="img/max.jpg">
+	</div>
+	
+
+</body>
+<script type="text/javascript">
+	var slider=document.getElementById("slider");
+	var min_box=document.getElementById("min_box");
+	var max_box=document.getElementById("max_box");
+	var max_img=max_box.children[0];
+	// console.log(max_img);
+	min_box.onmouseover=function(){
+		max_box.style.display="block";
+		slider.style.display = "block";
+	}
+	min_box.onmouseout=function(){
+		max_box.style.display="none";
+		slider.style.display = "none";
+	}
+	min_box.onmousemove=function(e){
+		
+		var e=e ||window.event;
+		// console.log(e);
+        var x=e.clientX-slider.offsetLeft;
+        var y=e.clientY-slider.offsetTop;
+        // console.log(x,y);
+       
+        min_box.onmousemove=function(e){
+        	var e=e||window.event;
+        // console.log(e);
+        	var slider_x=e.clientX-50;
+        	var slider_y=e.clientY-50;
+        	// console.log(e.clientX,e.clientY);
+        	slider.style.left=slider_x+"px";
+        	slider.style.top=slider_y+"px";
+        	var max_imgX=slider_x/min_box.offsetWidth;
+        	var max_imgY=slider_y/min_box.offsetHeight;
+        
+            if(slider_x>=min_box.offsetWidth-100){
+            	slider.style.left=min_box.offsetWidth-100+'px';
+            	
+            }
+            else if(slider_x<=0){
+				slider.style.left=0+'px';
+            }
+            if(slider_y>=min_box.offsetHeight-102){
+            	slider.style.top=min_box.offsetHeight-102+'px';
+
+            }
+            else if(slider_y<=0){
+            	slider.style.top=0+'px';
+            }
+
+            //max_img
+            max_img.style.top=-max_imgY*max_img.offsetHeight+"px";
+            max_img.style.left=-max_imgX*max_img.offsetWidth+"px";
+            	
+            
+        }
+	}
+</script>
+</html>
